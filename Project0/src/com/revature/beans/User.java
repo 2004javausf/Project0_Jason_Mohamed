@@ -39,6 +39,7 @@ public class User {
 		this.bankAcct = bankAcct;
 	}
 	
+	//Registers user and adds them to account list
 	public static User register(String username, String password, String name) {
 		return new User(username, password, name);
 	}
