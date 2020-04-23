@@ -1,6 +1,8 @@
 # Project0_Jason_Mohamed
 ## Banking App - To Do List
 ***
+###### -Must Be Maven Project-
+
 - [x] **Make Repository**
      - make branches
 
