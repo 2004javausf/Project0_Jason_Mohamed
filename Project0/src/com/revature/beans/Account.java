@@ -1,3 +1,4 @@
+
 package com.revature.beans;
 
 public class Account {
@@ -37,3 +38,4 @@ public class Account {
 		this.accBal = accBal;
 	}
 }
+
