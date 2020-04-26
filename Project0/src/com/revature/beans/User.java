@@ -1,5 +1,12 @@
 package com.revature.beans;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class User {
 	private String username;
 	private String password;
@@ -39,20 +46,38 @@ public class User {
 		this.bankAcct = bankAcct;
 	}
 	
+	@Override
+	public String toString() {
+		return username + " " + password + " " + name;
+	}
+	
 	//Registers user and adds them to account list
 	public static User register(String username, String password, String name) {
 		return new User(username, password, name);
 	}
 	
-	@Override
-	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", name=" + name + ", bankAcct=" + bankAcct
-				+ "]";
+	public static User login(String username, String password, ArrayList<User> userList) {
+		Iterator<User> it = userList.iterator();
+		
+		//return the user that matches login if it exists
+		while(it.hasNext()) {
+			User u = it.next();
+			if(u.username.equalsIgnoreCase(username) && u.password.equals(password))
+				return u;
+		}
+		
+		//if not found:
+		return null;
 	}
 
-	public void saveData() {
-		;
+	public void saveData(ArrayList<User> userList) throws IOException {
+		OutputStream os = new FileOutputStream("users.txt");
+		
+		//output user data to file in the format defined in toString()
+		for(User u : userList) {
+			String userString = u.toString() + "\n";
+			os.write(userString.getBytes());
+		}
+		os.close();
 	}
-	
-	
 }
