@@ -13,8 +13,8 @@ public class Menu {
 	private static final String resetString = "\u001B[0m";
 	
 	// Con for a very basic menu
-	public Menu() {
-		title = "Menu";
+	public Menu(String title) {
+		this.title = title;
 
 	}
 	
@@ -29,12 +29,12 @@ public class Menu {
 	}
 	
 	// Adds an item to the menu list 
-	public void addMenuItem (String item) {
+	public void AddMenuItem (String item) {
 		menuItems.add(item);
 	}
 	
 	// Displays the menu and all its items to the user
-	public void display() {
+	public void Display() {
 		System.out.println("=============================");
 		System.out.println(cyanString + "\t" + title + resetString);
 		System.out.println("=============================");

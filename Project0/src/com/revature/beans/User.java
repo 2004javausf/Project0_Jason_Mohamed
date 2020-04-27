@@ -7,11 +7,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class User {
-	private int userId;
+	// serialization variable
+	//private static final long serialVersionUID = ;
 	private String username;
 	private String password;
 	private String name;
 	private Account bankAcct;
+	
+	public User() {
+		
+	}
 	
 	public User(String username, String password, String name) {
 		this.username = username;
