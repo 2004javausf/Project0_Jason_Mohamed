@@ -4,7 +4,7 @@ package com.revature.beans;
 public class Account {
 	
 // Class variables
-	private int userId;
+	private int userId;      // Id to share across all user accounts
 	private String accOwner; // Stores owners name
 	private int accNum;	     // Stores owners account number
 	private double accBal;   // Stores owners account balance
