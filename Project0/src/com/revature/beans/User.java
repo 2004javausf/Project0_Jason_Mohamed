@@ -3,12 +3,18 @@ package com.revature.beans;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class User {
-	// serialization variable
-	//private static final long serialVersionUID = ;
+
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1948588996540717580L;
+	private int userId;
 	private String username;
 	private String password;
 	private String name;
@@ -24,6 +30,9 @@ public class User {
 		this.name = name;
 	}
 
+	public int getUserId() {
+		return userId;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -53,9 +62,10 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return username + " " + password + " " + name;
+		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", name=" + name
+				+ ", bankAcct=" + bankAcct + "]";
 	}
-	
+
 	//Registers user and adds them to account list
 	public static User register(String username, String password, String name) {
 		return new User(username, password, name);
