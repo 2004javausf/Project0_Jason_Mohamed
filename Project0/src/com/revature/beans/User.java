@@ -30,6 +30,9 @@ public class User implements Serializable{
 		this.name = name;
 	}
 
+	public int getUserId() {
+		return userId;
+	}
 	public String getUsername() {
 		return username;
 	}
