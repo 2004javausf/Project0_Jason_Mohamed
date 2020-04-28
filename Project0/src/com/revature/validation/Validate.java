@@ -8,10 +8,9 @@ public class Validate {
 	public static Scanner userInput = new Scanner(System.in);
 
 //Checks the user input and will try and parse it to an int
-public static boolean CheckInt(String input, String errorMessage) {
+public static int CheckInt(String input, String errorMessage) {
 	try {
-		Integer.parseInt(input);
-		return true;
+		return Integer.parseInt(input);		
 	}
 	catch (NumberFormatException e) {
 		System.out.println(errorMessage);
@@ -20,7 +19,8 @@ public static boolean CheckInt(String input, String errorMessage) {
 		String newInput = userInput.nextLine();
 		CheckInt(newInput, errorMessage);
 	}	
-	return false;
+	
+	return 0;
 }
 
 }

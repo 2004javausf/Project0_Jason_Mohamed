@@ -7,12 +7,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+
 public class User implements Serializable{
-	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1948588996540717580L;
 	private int userId;
 	private String username;
 	private String password;
