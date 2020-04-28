@@ -1,4 +1,4 @@
-package com.revature.validation;
+package com.revature.util;
 
 import java.util.Scanner;
 
