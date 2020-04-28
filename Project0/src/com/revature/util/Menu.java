@@ -1,4 +1,4 @@
-package com.revature.menu;
+package com.revature.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,16 @@ public class Menu {
 	// Adds an item to the menu list 
 	public void AddMenuItem (String item) {
 		menuItems.add(item);
+	}
+	
+	// Updates the menu title
+	public void newTitle(String title) {
+		this.title = title;
+	}
+	
+	// Retrieves the menu title
+	public String getTitle() {
+		return title;
 	}
 	
 	// Displays the menu and all its items to the user
