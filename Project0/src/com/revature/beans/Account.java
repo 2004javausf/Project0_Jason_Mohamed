@@ -1,7 +1,9 @@
 
 package com.revature.beans;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
 	
 // Class variables
 	private String username;  // Id to share across all user accounts
