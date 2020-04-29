@@ -2,10 +2,15 @@
 package com.revature.beans;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 
 public class Account implements Serializable {
 	
+/**
+	 * 
+	 */
 // Class variables
+	private static final long serialVersionUID = 8786701809320089922L;
 	private String username;  // Id to share across all user accounts
 	private String accOwner;  // Stores owners name
 	private int accNum;	      // Stores owners account number
@@ -56,6 +61,14 @@ public class Account implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+// non-overriding to.String
+	public String accString() {
+		// formats a double in dollar format
+		NumberFormat balance = NumberFormat.getCurrencyInstance();
+		
+		return accType + ": " + accNum + "\t" + balance.format(accBal);
 	}
 }
 
