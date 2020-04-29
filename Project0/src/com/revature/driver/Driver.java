@@ -1,24 +1,19 @@
 package com.revature.driver;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.revature.beans.User;
-import com.revature.menu.Menu;
-import com.revature.validation.Validate;
+import com.revature.util.Menu;
+import com.revature.util.Validate;
 
 public class Driver {
 	// ----------Global variables----------
 	// menu objects
 	static final Menu loginMenu = new Menu("Login"); // wont change
 	static Menu mainMenu;
+	static Menu subMenu;
 	// lists
-//	static List<User> users = new 
+ 
 	// user input
 	static Scanner sc = new Scanner(System.in);
 	// login info
@@ -41,7 +36,7 @@ public class Driver {
 //		password = sc.nextLine();
 		
 		// call main menu
-		mainMenu = new Menu("Main Menu", "Checkings", "Savings");
+		mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Request new account", "Exit");
 		mainMenu.Display();
 		
 		// get and validate user input
@@ -49,48 +44,96 @@ public class Driver {
 		MainSelection(input);
 	}
 		
+//-----------------------------------------Selection Methods----------------------------------------
 	static void MainSelection(int userInput) {
+		int choice; // stores the users choices
 		switch (userInput) {
-		case 1:
+		case 1: // sub-menus to Checking options
+			subMenu = new Menu("Checking", "Deposit", "Withdraw", "Transfer money", "Exit");
+			subMenu.Display();
+			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			System.out.println("\n\n\n\n");
+			break;
+			
+		case 2: //sub-menus to Savings options
+			subMenu.newTitle("Savings");
+			subMenu.Display();
+			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			System.out.println("\n\n\n\n");
+			break;
+			
+		case 3: //prompts user and creates a new account
 			
 			break;
 			
-		case 2:
-			
+		case 4: // exits program
+			System.out.println();
 			break;
 			
 		default: // if user chooses option not listed throw back menu to user
 			System.out.println("\n\n\n\nPlease type in a correct option.");
-			int input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
-			MainSelection(input);
+			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			MainSelection(choice);
 			break;
 		}
 	}
-		
 	
-	@SuppressWarnings("unchecked")
-	public static void readUserFile() {
-		try {
-			ObjectInputStream objectIn= new ObjectInputStream(new FileInputStream("user.txt"));
+	static void SubSelection(int userInput) {
+		int choice; // stores the users choices
+		switch (userInput) {
+		case 1: // prompts user for deposit info
+			System.out.println("\n\n\n\n");
+			Deposit(subMenu.getTitle());
+			break;
 			
-			User checkedUser = (User)objectIn.readObject();
-			if (checkedUser.getUsername() == username) {
-				user = checkedUser;
-			}
+		case 2: // prompts user for withdraw info
+			System.out.println("\n\n\n\n");
+			Withdraw(subMenu.getTitle());
+			break;
 			
-			//humanList= (ArrayList<Human>)objectIn.readObject();
-			objectIn.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+		case 3: // prompts user for transfer info
+			System.out.println("\n\n\n\n");
+			Deposit(subMenu.getTitle());
+			break;
+			
+		case 4: // exits back to main
+			System.out.println("\n\n\n\n");
+			mainMenu.Display();
+			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			MainSelection(choice);
+			break;
 
+		default: // if user chooses option not listed throw back menu to user
+			System.out.println("\n\n\n\nPlease type in a correct option.");
+			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			SubSelection(choice);
+			break;
+		}
+	}
+//==================================================================================================
+		
+//---------------------------------------Account Edit Methods---------------------------------------
+	public static void Deposit(String accType) {
+		if (accType.equals("Checking")) {
+			
+		}
+		else {
+			
+		}
+	}
+	
+	public static void Withdraw(String accType) {
+        if (accType.equals("Checking")) {
+			
+		}
+        else {
+        	
+        }
+	}
+	
+    public static void Transfer() {
+  
+	}
+//==================================================================================================
+	
 }
