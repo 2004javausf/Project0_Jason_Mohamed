@@ -72,7 +72,7 @@ public class Driver {
 			
 		case 4: //saves the bank info to their respective files and exits the program
 			IO.outputToFiles(Bank.usersList, Bank.accountsList);
-			System.out.println();
+			System.exit(0);
 			break;
 			
 		default: // if user chooses option not listed throw back menu to user
@@ -90,11 +90,17 @@ public class Driver {
 		case 1: // prompts user for deposit info
 			System.out.println("\n\n\n\n");
 			Bank.Deposit(subMenu.getTitle(), username);
+			
+			// prompts user to continue or exit program
+			TransactionPrompter();
 			break;
 			
 		case 2: // prompts user for withdraw info
 			System.out.println("\n\n\n\n");
 			Bank.Withdraw(subMenu.getTitle(), username);
+			
+			// prompts user to continue or exit program
+			TransactionPrompter();
 			break;
 			
 		case 3: // prompts user for transfer info
@@ -120,4 +126,17 @@ public class Driver {
 
 //==================================================================================================
 
+//-------------------------------------------Other Methods------------------------------------------
+	// prompts the user to make another transaction or exit program the executes
+	static void TransactionPrompter() {
+		if (Validate.CheckYesNo("Would you like to make another transaction? (Y/N)", "Please reply in the correct format") == true) {
+			System.out.println("\n\n\n\n");
+			mainMenu.Display();
+			int choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			MainSelection(choice);
+		}
+		else
+			System.exit(0);;
+	}
+//==================================================================================================
 }
