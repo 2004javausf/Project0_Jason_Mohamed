@@ -1,11 +1,7 @@
 package com.revature.beans;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 public class User implements Serializable{
@@ -14,15 +10,12 @@ public class User implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -1948588996540717580L;
-	private int userId;
 	private String username;
 	private String password;
 	private String name;
-	private Account bankAcct;
+	private ArrayList<Integer> accounts = new ArrayList<Integer>();
 	
-	public User() {
-		
-	}
+	public User() {}
 	
 	public User(String username, String password, String name) {
 		this.username = username;
@@ -30,9 +23,6 @@ public class User implements Serializable{
 		this.name = name;
 	}
 
-	public int getUserId() {
-		return userId;
-	}
 	public String getUsername() {
 		return username;
 	}
@@ -48,21 +38,16 @@ public class User implements Serializable{
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public Account getBankAcct() {
-		return bankAcct;
-	}
-	public void setBankAcct(Account bankAcct) {
-		this.bankAcct = bankAcct;
+	public void setBankAcct(int accId) {
+		this.accounts.add(accId);
 	}
 	
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", name=" + name
-				+ ", bankAcct=" + bankAcct + "]";
+		return "User [username=" + username + ", password="
+				+ password + ", name=" + name + "]";
 	}
 }
