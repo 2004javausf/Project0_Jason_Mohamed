@@ -1,9 +1,16 @@
 
 package com.revature.beans;
 
-public class Account {
+import java.io.Serializable;
+import java.text.NumberFormat;
+
+public class Account implements Serializable {
 	
+/**
+	 * 
+	 */
 // Class variables
+	private static final long serialVersionUID = 8786701809320089922L;
 	private String username;  // Id to share across all user accounts
 	private String accOwner;  // Stores owners name
 	private int accNum;	      // Stores owners account number
@@ -11,8 +18,18 @@ public class Account {
 	private String accType;   // Either a Checking or Savings
 	public boolean accActive; // checks to see if account is active
 	
+	
 	public Account() {
 		
+	}
+	
+	public Account(String username, String accOwner, int accNum, double accBal, String accType, boolean accActive) {
+		this.username = username;
+		this.accOwner = accOwner;
+		this.accNum = accNum;
+		this.accBal = accBal;
+		this.accType = accType;
+		this.accActive = accActive;
 	}
 
 // Getters & Setters
@@ -54,6 +71,14 @@ public class Account {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+// non-overriding to.String
+	public String accString() {
+		// formats a double in dollar format
+		NumberFormat balance = NumberFormat.getCurrencyInstance();
+		
+		return accType + ": " + accNum + "\t\t" + balance.format(accBal);
 	}
 }
 

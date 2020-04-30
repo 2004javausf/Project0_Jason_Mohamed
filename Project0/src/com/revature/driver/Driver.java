@@ -3,6 +3,8 @@ package com.revature.driver;
 import java.util.Scanner;
 
 import com.revature.beans.User;
+import com.revature.util.Bank;
+import com.revature.util.IO;
 import com.revature.util.Menu;
 import com.revature.util.Validate;
 
@@ -17,13 +19,15 @@ public class Driver {
 	// user input
 	static Scanner sc = new Scanner(System.in);
 	// login info
-	static String username;
-	static String password;
+	static String username = "";
+	static String password = "";
 	// User object
 	static User user = new User();
 	
 	
 	public static void main(String[] args) {
+		// Pull from text files and store
+		IO.readFiles();
 		
 //		loginMenu.Display();
 //		
@@ -66,12 +70,14 @@ public class Driver {
 			
 			break;
 			
-		case 4: // exits program
-			System.out.println();
+		case 4: //saves the bank info to their respective files and exits the program
+			IO.outputToFiles(Bank.usersList, Bank.accountsList);
+			System.exit(0);
 			break;
 			
 		default: // if user chooses option not listed throw back menu to user
 			System.out.println("\n\n\n\nPlease type in a correct option.");
+			mainMenu.Display();
 			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
 			MainSelection(choice);
 			break;
@@ -83,17 +89,23 @@ public class Driver {
 		switch (userInput) {
 		case 1: // prompts user for deposit info
 			System.out.println("\n\n\n\n");
-			Deposit(subMenu.getTitle());
+			Bank.Deposit(subMenu.getTitle(), username);
+			
+			// prompts user to continue or exit program
+			TransactionPrompter();
 			break;
 			
 		case 2: // prompts user for withdraw info
 			System.out.println("\n\n\n\n");
-			Withdraw(subMenu.getTitle());
+			Bank.Withdraw(subMenu.getTitle(), username);
+			
+			// prompts user to continue or exit program
+			TransactionPrompter();
 			break;
 			
 		case 3: // prompts user for transfer info
 			System.out.println("\n\n\n\n");
-			Deposit(subMenu.getTitle());
+
 			break;
 			
 		case 4: // exits back to main
@@ -105,35 +117,26 @@ public class Driver {
 
 		default: // if user chooses option not listed throw back menu to user
 			System.out.println("\n\n\n\nPlease type in a correct option.");
+			subMenu.Display();
 			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
 			SubSelection(choice);
 			break;
 		}
+		}
+
+//==================================================================================================
+
+//-------------------------------------------Other Methods------------------------------------------
+	// prompts the user to make another transaction or exit program the executes
+	static void TransactionPrompter() {
+		if (Validate.CheckYesNo("Would you like to make another transaction? (Y/N)", "Please reply in the correct format") == true) {
+			System.out.println("\n\n\n\n");
+			mainMenu.Display();
+			int choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			MainSelection(choice);
+		}
+		else
+			System.exit(0);;
 	}
 //==================================================================================================
-		
-//---------------------------------------Account Edit Methods---------------------------------------
-	public static void Deposit(String accType) {
-		if (accType.equals("Checking")) {
-			
-		}
-		else {
-			
-		}
-	}
-	
-	public static void Withdraw(String accType) {
-        if (accType.equals("Checking")) {
-			
-		}
-        else {
-        	
-        }
-	}
-	
-    public static void Transfer() {
-  
-	}
-//==================================================================================================
-	
 }
