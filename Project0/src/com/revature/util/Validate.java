@@ -2,7 +2,7 @@ package com.revature.util;
 
 import java.util.Scanner;
 
-public class Validate {
+final public class Validate {
 	
 	// Scanner to take in user input
 	public static Scanner userInput = new Scanner(System.in);
@@ -46,7 +46,7 @@ public static boolean CheckYesNo(String prompt, String errorMessage) {
 	String newInput = userInput.nextLine();
 	
 	//if the user gives incorrect input will loop till its correct
-	while (!newInput.equalsIgnoreCase("y") || !newInput.equalsIgnoreCase("yes") || !newInput.equalsIgnoreCase("n") || !newInput.equalsIgnoreCase("no")) {
+	while (!(newInput.equalsIgnoreCase("y") || newInput.equalsIgnoreCase("yes") || newInput.equalsIgnoreCase("n") || newInput.equalsIgnoreCase("no"))) {
 		System.out.println("\n" + errorMessage + "\n" + prompt);
 		newInput = userInput.nextLine();
 	}

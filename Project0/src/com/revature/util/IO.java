@@ -26,7 +26,7 @@ public class IO {
 			
 			// write the lists to the text files
 			usersOut.writeObject(users);
-			usersOut.writeObject(accounts);
+			accountsOut.writeObject(accounts);
 			
 			// close the streams
 			usersOut.close();

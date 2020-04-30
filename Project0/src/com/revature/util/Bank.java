@@ -19,6 +19,10 @@ public class Bank {
 	static Map<Integer, String> accountNames;   // List variable to store the accounts type, number, and their amounts
 	static Scanner sc = new Scanner(System.in); // variable to store all user input
 	
+	// Strings to change the color of other Strings printed to the screen
+	private static final String cyanString = "\u001B[36m";
+	private static final String resetString = "\u001B[0m";
+	
 //---------------------------------------Account Edit Methods---------------------------------------
 		public static void Deposit(String accType, String username) {
 			// builds menu
@@ -40,7 +44,8 @@ public class Bank {
 				Account selectedAcc = AccSelector(userInput);
 				
 				// prompt the user and deposit amount into the selected account
-				System.out.println("\n How much would you like to deposit?");
+				System.out.println(selectedAcc.accString());
+				System.out.println("\nHow much would you like to deposit?");
 				
 				double deposit = -1;
 				while (deposit < 0) {
@@ -54,7 +59,7 @@ public class Bank {
 					if (acc.getAccNum() == selectedAcc.getAccNum()) {
 						acc = selectedAcc;
 						
-						System.out.println(" " + acc.accString());
+						System.out.println(cyanString + "\n" + acc.accString() + resetString);
 					}
 				}			
 		}
@@ -79,14 +84,14 @@ public class Bank {
 				Account selectedAcc = AccSelector(userInput);
 				
 				// prompt the user and withdraw amount from the selected account
-				System.out.println("\n How much would you like to withdraw?");
+				System.out.println("\nHow much would you like to withdraw?");
 				
 				double withdraw = -1;
 				while (withdraw < 0) {
 					withdraw = Validate.CheckDouble(sc.nextLine(), "Please enter a dollar amount in number format greater than -1");
 				}
 				// subtract withdraw from the account if withdraw is equal to or greater than account balance
-				if (withdraw >= selectedAcc.getAccBal()) {
+				if (withdraw <= selectedAcc.getAccBal()) {
 					selectedAcc.setAccBal(selectedAcc.getAccBal() - withdraw);
 				}
 				else { // pushes withdraw method again
@@ -99,7 +104,7 @@ public class Bank {
 					if (acc.getAccNum() == selectedAcc.getAccNum()) {
 						acc = selectedAcc;
 						
-						System.out.println(" " + acc.accString());
+						System.out.println(cyanString + "\n" + acc.accString() + resetString);
 					}
 				}						
 		}
@@ -136,7 +141,7 @@ public class Bank {
 	    // converts the accountNames map into an array of items for the menu
 	    private static String[] MenuItemConverter() {
 	    	String s = accountNames.values().toString();
-			String subS = (" " + s.substring(1, s.length() - 2));
+			String subS = (" " + s.substring(1, s.length() - 1));
 			String[] sa = subS.split(",");
 			return sa;
 	    }
@@ -145,7 +150,9 @@ public class Bank {
 	  
 //-----------------------------------------Selection Methods----------------------------------------
 	    static Account AccSelector(int userInput) {
-	    	if (userInput >= 1 && userInput <= accountNames.size() - 1) {
+	    	// account place holder to store info
+	    	Account selectedAcc = new Account();
+	    	if (userInput >= 1 && userInput <= accountNames.size()) {
 	    		/* 
 	    		 * This line finds the account the user selected by comparing the userInput(int) to the 
 	    		 * index of the LinkedHashTable, which stores the accountsList(data from file) index and a
@@ -153,17 +160,16 @@ public class Bank {
 	    		 * 
 	    		 * This matches both the selected menu item and desired Account from the accountsList and returns 
 	    		 * it to then edit
-	    		 */
-				Account selectedAcc = accountsList.get((int) accountNames.keySet().toArray()[userInput - 1]);
-				return selectedAcc;
+	    		 */	  
+				selectedAcc = accountsList.get((int) accountNames.keySet().toArray()[userInput - 1]);
 			} else {
-				System.out.println("\n\n\n\nPlease type in a correct option.");
+				System.out.println("\n\n\nPlease type in a correct option.");
 				accounts.Display();
-				int choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
-				AccSelector(choice);
+				System.out.println("\nWhat account would you like to edit?");
+				userInput = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+				selectedAcc = AccSelector(userInput);
 				}
-	    	
-	    	return null;
+	    	return selectedAcc;
 	    }
 //==================================================================================================
 }
