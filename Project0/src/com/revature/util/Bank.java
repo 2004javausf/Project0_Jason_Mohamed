@@ -21,41 +21,96 @@ public class Bank {
 	
 //---------------------------------------Account Edit Methods---------------------------------------
 		public static void Deposit(String accType, String username) {
+			// builds menu
+			accountNames = AccountStrFormatter(accType, username);
+			accounts = new Menu("temp title", MenuItemConverter());
 			
-			if (accType.equals("Checking")) {
-				// builds and displays menu
-				accountNames = AccountStrFormatter(accType, username);
-				accounts = new Menu("Checking Accounts", (String[]) accountNames.values().toArray());
+			// checks account type to update the menu
+			if (accType.equalsIgnoreCase("Checking")) {
+				accounts.newTitle("Checking Accounts");
+			}
+			else {accounts.newTitle("Savings Accounts");}
+
+				// displays menu	
 				accounts.Display();
-				System.out.println("What account would you like to deposit into?");
+				System.out.println("\nWhat account would you like to deposit into?");
 				
 				// retrieves selected account
 				int userInput = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
 				Account selectedAcc = AccSelector(userInput);
 				
 				// prompt the user and deposit amount into the selected account
+				System.out.println("\n How much would you like to deposit?");
+				
+				double deposit = -1;
+				while (deposit < 0) {
+					deposit = Validate.CheckDouble(sc.nextLine(), "Please enter a dollar amount in number format greater than -1");
+				}
+				// add deposit to the account
+				selectedAcc.setAccBal(selectedAcc.getAccBal() + deposit);
+				
 				// update the referenced account in the accountsList
-				
-			}
-			else {
-				
-			}
+				for (Account acc : accountsList) {
+					if (acc.getAccNum() == selectedAcc.getAccNum()) {
+						acc = selectedAcc;
+						
+						System.out.println(" " + acc.accString());
+					}
+				}			
 		}
 		
 		public static void Withdraw(String accType, String username) {
-	        if (accType.equals("Checking")) {
-				
+			// builds menu
+			accountNames = AccountStrFormatter(accType, username);
+			accounts = new Menu("temp title", MenuItemConverter());
+			
+			// checks account type to update the menu
+			if (accType.equalsIgnoreCase("Checking")) {
+				accounts.newTitle("Checking Accounts");
 			}
-	        else {
-	        	
-	        }
+			else {accounts.newTitle("Savings Accounts");}
+
+				// displays menu	
+				accounts.Display();
+				System.out.println("\nWhat account would you like to withdraw from?");
+				
+				// retrieves selected account
+				int userInput = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+				Account selectedAcc = AccSelector(userInput);
+				
+				// prompt the user and withdraw amount from the selected account
+				System.out.println("\n How much would you like to withdraw?");
+				
+				double withdraw = -1;
+				while (withdraw < 0) {
+					withdraw = Validate.CheckDouble(sc.nextLine(), "Please enter a dollar amount in number format greater than -1");
+				}
+				// subtract withdraw from the account if withdraw is equal to or greater than account balance
+				if (withdraw >= selectedAcc.getAccBal()) {
+					selectedAcc.setAccBal(selectedAcc.getAccBal() - withdraw);
+				}
+				else { // pushes withdraw method again
+					System.out.println("\n\n\n\nWithdraw amount exceeds the account balance.");
+					Withdraw(accType, username);
+				}
+				
+				// update the referenced account in the accountsList
+				for (Account acc : accountsList) {
+					if (acc.getAccNum() == selectedAcc.getAccNum()) {
+						acc = selectedAcc;
+						
+						System.out.println(" " + acc.accString());
+					}
+				}						
 		}
 		
 	    public static void Transfer() {
 	  
 		}
 	    
+	    // gets the names of accounts
 	    private static Map<Integer, String> AccountStrFormatter(String accType, String username) {
+
 	    	// List to return
 	    	Map<Integer, String> returnLst = new LinkedHashMap<Integer, String>();
 	    	
@@ -77,6 +132,15 @@ public class Bank {
 	    	
 	    	return returnLst;
 	    }
+	    
+	    // converts the accountNames map into an array of items for the menu
+	    private static String[] MenuItemConverter() {
+	    	String s = accountNames.values().toString();
+			String subS = (" " + s.substring(1, s.length() - 2));
+			String[] sa = subS.split(",");
+			return sa;
+	    }
+	    
 //==================================================================================================
 	  
 //-----------------------------------------Selection Methods----------------------------------------

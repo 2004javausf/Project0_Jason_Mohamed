@@ -23,4 +23,20 @@ public static int CheckInt(String input, String errorMessage) {
 	return 0;
 }
 
+//Checks the user input and will try and parse it to an double
+public static double CheckDouble(String input, String errorMessage) {
+	try {
+		return Double.parseDouble(input);		
+	}
+	catch (NumberFormatException e) {
+		System.out.println(errorMessage);
+		
+		// New user input and reset prompts
+		String newInput = userInput.nextLine();
+		CheckDouble(newInput, errorMessage);
+	}	
+	
+	return 0;
+}
+
 }

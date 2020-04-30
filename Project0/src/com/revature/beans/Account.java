@@ -18,8 +18,18 @@ public class Account implements Serializable {
 	private String accType;   // Either a Checking or Savings
 	public boolean accActive; // checks to see if account is active
 	
+	
 	public Account() {
 		
+	}
+	
+	public Account(String username, String accOwner, int accNum, double accBal, String accType, boolean accActive) {
+		this.username = username;
+		this.accOwner = accOwner;
+		this.accNum = accNum;
+		this.accBal = accBal;
+		this.accType = accType;
+		this.accActive = accActive;
 	}
 
 // Getters & Setters
@@ -68,7 +78,7 @@ public class Account implements Serializable {
 		// formats a double in dollar format
 		NumberFormat balance = NumberFormat.getCurrencyInstance();
 		
-		return accType + ": " + accNum + "\t" + balance.format(accBal);
+		return accType + ": " + accNum + "\t\t" + balance.format(accBal);
 	}
 }
 
