@@ -30,55 +30,41 @@ public class Driver {
 	public static void main(String[] args) {
 		// Pull from text files and store
 		IO.readFiles();
+		int input;
 		
-		//users
-//		User user1 = new User("username", "password", "name");
-//		User user2 = new User("ClaryJ", "password0", "Jason W. Clary");
-//		User admin1 = new Admin("admin", "admin", "admin");
-		
-//		// Accounts
-//		Account acc1 = new Account("username", "name", 12345, 100.50, "Checking", true);
-//		Account acc2 = new Account("username", "name", 12346, 200.66, "Checking", false);
-//		Account acc3 = new Account("username", "name", 12347, 300, "Savings", true);
-//		
-//		Account acc4 = new Account("ClaryJ", "Jason W. Clary", 54321, 25, "Checking", true);
-//		Account acc5 = new Account("ClaryJ", "Jason W. Clary", 54322, 50, "Checking", false);
-//		Account acc6 = new Account("ClaryJ", "Jason W. Clary", 54323, 75, "Savings", true);
 
-		
-//		// Add accounts to list
-//		Bank.accountsList.add(acc1);
-//		Bank.accountsList.add(acc2);
-//		Bank.accountsList.add(acc3);
-//		Bank.accountsList.add(acc4);
-//		Bank.accountsList.add(acc5);
-//		Bank.accountsList.add(acc6);
-
-		
-		// Add accounts to list
-//		Bank.usersList.add(user1);
-//		Bank.usersList.add(user2);
-//		Bank.usersList.add(admin1);	
 		
 		// print lists
 		System.out.println(Bank.usersList.toString() + "\n");
 		System.out.println(Bank.accountsList.size());
 		
-//		loginMenu.Display();
-//		
-//		System.out.println("What is your username?");
-//		username = sc.nextLine();
-//		readUserFile();
-//		System.out.println(user.toString());
-//		
-//		System.out.println("What is your password?");
-//		password = sc.nextLine();
+
+		// starting menu
+		mainMenu = new Menu("Welcome", "Login", "Register", "Exit");
+		mainMenu.Display();
+	
+		// get and validate user input
+		input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+		
+		if(input == 1) 
+			LoginSelection();
+		
+		if(input == 2)
+			RegisterSelection();
+			
+		if(input == 3) {
+			IO.outputToFiles(Bank.usersList, Bank.accountsList);
+			System.exit(0);
+		}
+	
 		
 		// call main menu
+		System.out.println("\n\n\n");
+		mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Request new account", "Exit");
 		mainMenu.Display();
 		
 		// get and validate user input
-		int input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+		input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
 		MainSelection(input);
 	}
 		
@@ -158,7 +144,45 @@ public class Driver {
 			SubSelection(choice);
 			break;
 		}
-		}
+	}
+	
+	static void LoginSelection() {
+		// Login
+		do {
+			loginMenu.Display();
+			
+			System.out.println("What is your username?");
+			username = sc.nextLine();
+			
+			System.out.println("What is your password?");
+			password = sc.nextLine();
+			
+			user = Validate.login(username, password, Bank.usersList);
+			
+			if(user == null)
+				System.out.println("\n\n\nUsername/password not found");
+		}while(user == null);
+	}
+	
+	static void RegisterSelection() {
+		do {
+			loginMenu.Display();
+			
+			System.out.println("Enter a new username");
+			username = sc.nextLine();
+			
+			System.out.println("Enter a new password");
+			password = sc.nextLine();
+			
+			System.out.println("Enter a name");
+			String name = sc.nextLine();
+			
+			user = Validate.register(username, password, name, Bank.usersList);
+			
+			if(user == null)
+				System.out.println("\n\n\nUser already exists");
+		}while(user == null);
+	}
 
 //==================================================================================================
 

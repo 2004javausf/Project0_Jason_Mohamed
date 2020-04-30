@@ -19,9 +19,7 @@ public class Account implements Serializable {
 	public boolean accActive; // checks to see if account is active
 	
 	
-	public Account() {
-		
-	}
+	public Account() {}
 	
 	public Account(String username, String accOwner, int accNum, double accBal, String accType, boolean accActive) {
 		this.username = username;
