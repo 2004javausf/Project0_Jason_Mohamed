@@ -89,7 +89,7 @@ public static boolean CheckYesNo(String prompt, String errorMessage) {
 	while (!(newInput.equalsIgnoreCase("y") || newInput.equalsIgnoreCase("yes") || newInput.equalsIgnoreCase("n") || newInput.equalsIgnoreCase("no"))) {
 		System.out.println("\n" + errorMessage + "\n" + prompt);
 		newInput = userInput.nextLine();
-		
+	}
 		//if yes will return true, if no will return false
 		if (newInput.equalsIgnoreCase("y") || newInput.equalsIgnoreCase("yes"))
 			return true;
@@ -97,4 +97,4 @@ public static boolean CheckYesNo(String prompt, String errorMessage) {
 			return false;
 	}
 }
-}
+

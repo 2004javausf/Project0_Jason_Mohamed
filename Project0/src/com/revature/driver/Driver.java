@@ -20,11 +20,11 @@ public class Driver {
  
 	// user input
 	static Scanner sc = new Scanner(System.in);
-	// login info
-	static String username = "username";
-	static String password = "";
 	// User object
 	static User user = new User();
+	// login info
+	static String username = user.getUsername();
+	static String password = user.getPassword();
 	
 	
 	public static void main(String[] args) {
@@ -32,31 +32,17 @@ public class Driver {
 		IO.readFiles();
 		int input;
 		
-
-		
 		// print lists
 		System.out.println(Bank.usersList.toString() + "\n");
 		System.out.println(Bank.accountsList.size());
 		
-
 		// starting menu
 		mainMenu = new Menu("Welcome", "Login", "Register", "Exit");
 		mainMenu.Display();
 	
 		// get and validate user input
 		input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
-		
-		if(input == 1) 
-			LoginSelection();
-		
-		if(input == 2)
-			RegisterSelection();
-			
-		if(input == 3) {
-			IO.outputToFiles(Bank.usersList, Bank.accountsList);
-			System.exit(0);
-		}
-	
+		InitialSelection(input);	
 		
 		// call main menu
 		System.out.println("\n\n\n");
@@ -69,6 +55,30 @@ public class Driver {
 	}
 		
 //-----------------------------------------Selection Methods----------------------------------------
+	static void InitialSelection(int userInput ) {
+		int choice; // stores the users choices
+		switch (userInput) {
+		case 1:
+			LoginSelection();
+			break;
+			
+        case 2:
+        	RegisterSelection();
+			break;
+			
+        case 3:
+        	System.exit(0);
+	        break;
+
+		default:
+			System.out.println("\n\n\nPlease type in a correct option.");
+			mainMenu.Display();
+			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			InitialSelection(choice);
+			break;
+		}
+	}
+
 	static void MainSelection(int userInput) {
 		int choice; // stores the users choices
 		switch (userInput) {
