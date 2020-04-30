@@ -56,6 +56,7 @@ public class Validate {
 		return null;
 	}
 
+	//uses Object Stream to output the list to a text file
 	public void saveData(ArrayList<User> userList) throws IOException {
 		ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream("users.txt"));
 		
