@@ -2,8 +2,6 @@ package com.revature.driver;
 
 import java.util.Scanner;
 
-import com.revature.beans.Account;
-import com.revature.beans.Admin;
 import com.revature.beans.User;
 import com.revature.util.Bank;
 import com.revature.util.IO;
@@ -14,8 +12,8 @@ public class Driver {
 	// ----------Global variables----------
 	// menu objects
 	static final Menu loginMenu = new Menu("Login"); // wont change
-	static Menu mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Request new account", "Exit");
-	static Menu subMenu = new Menu("temp title", "Deposit", "Withdraw", "Transfer money", "Exit");
+	static Menu mainMenu;
+	static Menu subMenu = new Menu("temp title", "Deposit", "Withdraw", "Exit");
 	// lists
  
 	// user input
@@ -33,11 +31,10 @@ public class Driver {
 		int input;
 		
 		// print lists
-		System.out.println(Bank.usersList.toString() + "\n");
-		System.out.println(Bank.accountsList.size());
+//		System.out.println(Bank.usersList.toString() + "\n");
+//		System.out.println(Bank.accountsList.size());
 		
 		// starting menu
-		System.out.println("\n\n\n");
 		mainMenu = new Menu("Welcome", "Login", "Register", "Exit");
 		mainMenu.Display();
 	
@@ -47,7 +44,7 @@ public class Driver {
 		
 		// call main menu
 		System.out.println("\n\n\n");
-		mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Request new account", "Exit");
+		mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Transfer money", "Request new account", "Exit");
 		mainMenu.Display();
 		
 		// get and validate user input
@@ -137,11 +134,19 @@ public class Driver {
 			SubSelection(choice);
 			break;
 			
-		case 3: //prompts user and creates a new account
+		case 3: // prompts user for transfer info
+			System.out.println("\n\n\n");
+			Bank.Transfer(username);
+			
+			// prompts user to continue or exit program
+			TransactionPrompter();
+			break;
+			
+		case 4: //prompts user and creates a new account
 			
 			break;
 			
-		case 4: //saves the bank info to their respective files and exits the program
+		case 5: //saves the bank info to their respective files and exits the program
 			IO.outputToFiles(Bank.usersList, Bank.accountsList);
 			System.exit(0);
 			break;
@@ -168,18 +173,13 @@ public class Driver {
 			
 		case 2: // prompts user for withdraw info
 			System.out.println("\n\n\n");
-			System.out.println(Bank.Withdraw(subMenu.getTitle(), username));
+            Bank.Withdraw(subMenu.getTitle(), username);
 			
 			// prompts user to continue or exit program
 			TransactionPrompter();
 			break;
 			
-		case 3: // prompts user for transfer info
-			System.out.println("\n\n\n");
-
-			break;
-			
-		case 4: // exits back to main
+		case 3: // exits back to main
 			System.out.println("\n\n\n");
 			mainMenu.Display();
 			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
@@ -195,20 +195,22 @@ public class Driver {
 		}
 	}
 
-
 //==================================================================================================
 
 //-------------------------------------------Other Methods------------------------------------------
 	// prompts the user to make another transaction or exit program
 	static void TransactionPrompter() {
+		// save the new account information to the file
+		IO.outputToFiles(Bank.usersList, Bank.accountsList);
+		
+		// prompt the user to continue and execute
 		if (Validate.CheckYesNo("Would you like to make another transaction? (Y/N)", "Please reply in the correct format") == true) {
 			System.out.println("\n\n\n\n");
 			mainMenu.Display();
 			int choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
 			MainSelection(choice);
 		}
-		else
-			IO.outputToFiles(Bank.usersList, Bank.accountsList);
+		else			
 			System.exit(0);;
 	}
 //==================================================================================================
