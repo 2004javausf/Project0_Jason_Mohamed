@@ -14,6 +14,7 @@ public class Validate {
 
 	//Checks the user input and will try and parse it to an int
 	public static int CheckInt(String input, String errorMessage) {
+		int numReturn;
 		try {
 			return Integer.parseInt(input);		
 		}
@@ -22,10 +23,10 @@ public class Validate {
 			
 			// New user input and reset prompts
 			String newInput = userInput.nextLine();
-			CheckInt(newInput, errorMessage);
+			numReturn = CheckInt(newInput, errorMessage);
 		}	
 		
-		return 0;
+		return numReturn;
 	}
 	
 	//Registers user and adds them to account list
@@ -57,21 +58,11 @@ public class Validate {
 		acc.accActive = active;
 	}
 	
-	public static void 
-	
 	public static void cancelAccount(int accId, List<Account> accountsList) {
 		for(Account acc : accountsList)
 			if(acc.getAccNum() == accId)
 				accountsList.remove(acc);
 	}
-	
-//	//uses Object Stream to output the list to a text file
-//	public void saveData(ArrayList<User> userList) throws IOException {
-//		ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream("users.txt"));
-//		
-//		objectOut.writeObject(userList);
-//		objectOut.close();
-//	}
 
 	//Checks the user input and will try and parse it to an double
 	public static double CheckDouble(String input, String errorMessage) {
@@ -89,23 +80,22 @@ public class Validate {
 		return 0;
 	}
 
-	//Checks if the user chose yes or no
 	public static boolean CheckYesNo(String prompt, String errorMessage) {
 		//prompts the user and gets their input
 		System.out.println("\n" + prompt);
 		String newInput = userInput.nextLine();
 		
 		//if the user gives incorrect input will loop till its correct
-		while (!newInput.equalsIgnoreCase("y") || !newInput.equalsIgnoreCase("yes") || !newInput.equalsIgnoreCase("n") || !newInput.equalsIgnoreCase("no")) {
+		while (!(newInput.equalsIgnoreCase("y") || newInput.equalsIgnoreCase("yes") || newInput.equalsIgnoreCase("n") || newInput.equalsIgnoreCase("no"))) {
 			System.out.println("\n" + errorMessage + "\n" + prompt);
 			newInput = userInput.nextLine();
 		}
-		
-		//if yes will return true, if no will return false
-		if (newInput.equalsIgnoreCase("y") || newInput.equalsIgnoreCase("yes"))
-			return true;
-		else
-			return false;
+	
+			//if yes will return true, if no will return false
+			if (newInput.equalsIgnoreCase("y") || newInput.equalsIgnoreCase("yes"))
+				return true;
+			else
+				return false;
 	}
 
 }
