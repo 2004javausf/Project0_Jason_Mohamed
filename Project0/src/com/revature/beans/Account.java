@@ -71,12 +71,25 @@ public class Account implements Serializable {
 		this.username = username;
 	}
 	
-// non-overriding to.String
+// non-overriding to.String's
 	public String accString() {
 		// formats a double in dollar format
 		NumberFormat balance = NumberFormat.getCurrencyInstance();
 		
-		return accType + ": " + accNum + "\t\t" + balance.format(accBal);
+		return accType + ": " + accNum + "\t" + balance.format(accBal);
 	}
+	
+	public String adminAccString() {
+		return LPad("User: " + accOwner, 25, ' ') + accType + ": " + accNum + "\t\t";
+	}	
+	
+// methods to pad left and right
+	public static String LPad(String str, Integer length, char car) {
+		  return (str + String.format("%" + length + "s", "").replace(" ", String.valueOf(car))).substring(0, length);
+		}
+
+	public static String RPad(String str, Integer length, char car) {
+		  return (String.format("%" + length + "s", "").replace(" ", String.valueOf(car)) + str).substring(str.length(), length + str.length());
+		}
 }
 
