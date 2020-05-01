@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import java.text.NumberFormat;
+import java.util.Random;
 
 import com.revature.beans.Account;
 import com.revature.beans.User;
@@ -48,7 +49,6 @@ public class Bank {
 				Account selectedAcc = AccSelector(userInput);
 				
 				// prompt the user and deposit amount into the selected account
-				System.out.println(selectedAcc.accString());
 				System.out.println("\nHow much would you like to deposit?");
 				
 				double deposit = -1;
@@ -170,11 +170,42 @@ public class Bank {
 			secondAcc.setAccBal(secondAcc.getAccBal() + withdraw);
 			//----------------------------------------------------------------
 		}
+        
+	    public static void CreateAccount(User user) {
+	    	// random variable to create a unique account number
+	    	Random random = new Random();
+	    	
+	    	// preload any info the user doesnt need to input or have access to	
+	    	Account newAcc = new Account();
+	    	newAcc.accActive = false;
+	    	newAcc.setUsername(user.getUsername());
+	    	newAcc.setAccOwner(user.getName());
+	    	// gets a unique account number
+	    	for (Account acc : accountsList) {
+	    		do {
+		    		newAcc.setAccNum(random.nextInt(89999) + 10000);
+		    	} while (newAcc.getAccNum() == acc.getAccNum());		    	
+			}
+	    	newAcc.setAccBal(0);
+	    	
+	    	
+        	System.out.println("\nWhat type of account would you like to create?");
+        	
+        	// retrieves selected account type and store
+			String userInput = Validate.CheckAccType(sc.nextLine(), "Please use correct spelling. (Checking/Savings)");
+			newAcc.setAccType(userInput);
+			
+			// add account to the accountsList
+			accountsList.add(newAcc);
+			
+			// print to user account created then push back to menu
+			System.out.println("\nHere is your new acount! (Account will await aproval by admin before editing can happen)\n" + newAcc.adminAccString());		
+        }
 	    
 	    // for ADMIN------
 	    public static void AdminDeposit() {
 	    	// builds menu
-	    	accountNames = AccountStrFormatter();
+	    	accountNames = AccountStrFormatter(true);
 		    accounts = new Menu("Users Accounts", MenuItemConverter());
 
 			// displays menu	
@@ -186,7 +217,6 @@ public class Bank {
 			Account selectedAcc = AccSelector(userInput);
 			
 			// prompt the user and deposit amount into the selected account
-			System.out.println(selectedAcc.accString());
 			System.out.println("\nHow much would you like to deposit?");
 			
 			double deposit = -1;
@@ -210,7 +240,7 @@ public class Bank {
         	// string to output to screen
         	String transaction = "";
 			// builds menu
-			accountNames = AccountStrFormatter();
+			accountNames = AccountStrFormatter(true);
 			accounts = new Menu("temp title", MenuItemConverter());
 			
 			// displays menu	
@@ -244,7 +274,7 @@ public class Bank {
     
         public static void AdminTransfer() {
         	// builds menu
-	    	accountNames = AccountStrFormatter();
+	    	accountNames = AccountStrFormatter(true);
 	    	accounts = new Menu("User Accounts", MenuItemConverter());
 	    	
 	    	//------------------------WITHDRAW PORTION------------------------
@@ -274,7 +304,7 @@ public class Bank {
 			} while (withdraw < 0 && withdraw > firstAcc.getAccBal());
 						
 			// subtract withdraw from the account if withdraw is equal to or greater than account balance
-			String originalFirst = firstAcc.accString(); // string to hold the original choice to exclude from future menu
+			//String originalFirst = firstAcc.accString(); // string to hold the original choice to exclude from future menu
 			firstAcc.setAccBal(firstAcc.getAccBal() - withdraw);
 			//----------------------------------------------------------------
 			
@@ -292,7 +322,44 @@ public class Bank {
 			// add the withdraw amount to the second account
 			secondAcc.setAccBal(secondAcc.getAccBal() + withdraw);
 			//----------------------------------------------------------------
-    }	    	
+    }	    
+        
+        public static void AdminApprover() {
+        	// builds menu
+	    	accountNames = AccountStrFormatter(false);
+	    	accounts = new Menu("User Accounts", MenuItemConverter());
+	    	
+	    	// displays menu	
+			accounts.Display();
+			System.out.println("\nWhat account would you like to approve/deny?");
+			
+			// retrieves selected account
+			int userInput = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			Account selectedAcc = AccSelector(userInput);
+			
+			// prompt the admin to approve or deny account
+			System.out.println();
+			if (Validate.CheckApproveDeny("\nWould you like to approve or deny this account? (input \"approve\" or \"deny\")", "Please input in a correct format") == true) {
+				selectedAcc.accActive = true;	
+				
+				// update the referenced account in the accountsList
+				for (Account acc : accountsList) {
+					if (acc.getAccNum() == selectedAcc.getAccNum()) {
+						acc = selectedAcc;
+					}
+				}			
+			}
+			else {
+				// delete the referenced account in the accountsList
+				for (Account acc : accountsList) {
+					if (acc.getAccNum() == selectedAcc.getAccNum()) {
+						accountsList.remove(acc);
+			     }
+			}
+		  }
+			// update the text files
+			IO.outputToFiles(usersList, accountsList);
+        }        
 //==================================================================================================
 		  
 	    
@@ -370,7 +437,7 @@ public class Bank {
 	    	return returnLst;
 	    }
 	    
-	    private static Map<Integer, String> AccountStrFormatter() {
+	    private static Map<Integer, String> AccountStrFormatter(boolean active) {
 	    	// List to return
 	    	Map<Integer, String> returnLst = new LinkedHashMap<Integer, String>();
 	    	
@@ -380,7 +447,7 @@ public class Bank {
 	    		 * Then if the account type is correct
 	    		 * Then checks if the account is active
 				 */ 
-				if (accountsList.get(i).accActive == true) {
+				if (accountsList.get(i).accActive == active) {
 					// 
 					String lstItem = accountsList.get(i).adminAccString();
 					returnLst.put(i, lstItem);
