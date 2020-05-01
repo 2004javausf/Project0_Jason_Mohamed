@@ -9,7 +9,7 @@ import com.revature.beans.User;
 
 public class Validate {
 	
-	// Scanner to take in user input
+	//Scanner to take in user input
 	public static Scanner userInput = new Scanner(System.in);
 
 	//Checks the user input and will try and parse it to an int
@@ -29,7 +29,7 @@ public class Validate {
 		return numReturn;
 	}
   
-  //Checks the user input and will try and parse it to an double
+    //Checks the user input and will try and parse it to an double
 	public static double CheckDouble(String input, String errorMessage) {
 		try {
 			return Double.parseDouble(input);		
@@ -83,7 +83,7 @@ public class Validate {
 				accountsList.remove(acc);
 	}
 
-  //Checks if the user chose yes or no
+    //Checks if the user chose yes or no
 	public static boolean CheckYesNo(String prompt, String errorMessage) {
 		//prompts the user and gets their input
 		System.out.println("\n" + prompt);
@@ -102,4 +102,42 @@ public class Validate {
 			return false;
 	}
 
+	//Checks if the user chose approve or deny
+	public static boolean CheckApproveDeny(String prompt, String errorMessage) {
+			//prompts the user and gets their input
+			System.out.println("\n" + prompt);
+			String newInput = userInput.nextLine();
+			
+			//if the user gives incorrect input will loop till its correct
+			while (!(newInput.equalsIgnoreCase("approve") || newInput.equalsIgnoreCase("approves") || newInput.equalsIgnoreCase("deny") || newInput.equalsIgnoreCase("denies") || newInput.equalsIgnoreCase("denys"))) {
+				System.out.println("\n" + errorMessage + "\n" + prompt);
+				newInput = userInput.nextLine();
+			}
+		
+			//if yes will return true, if no will return false
+			if (newInput.equalsIgnoreCase("approve") || newInput.equalsIgnoreCase("approves"))
+				return true;
+			else
+				return false;
+		}
+
+	
+	//Checks whether user requested checking or savings
+	public static String CheckAccType(String prompt, String errorMessage) {
+		//prompts the user and gets their input
+		System.out.println("\n" + prompt);
+		String newInput = userInput.nextLine();
+		
+		//if the user gives incorrect input will loop till its correct
+		while (!(newInput.equalsIgnoreCase("Checking") || newInput.equalsIgnoreCase("Checkings") || newInput.equalsIgnoreCase("Saving") || newInput.equalsIgnoreCase("Savings"))) {
+			System.out.println("\n" + errorMessage + "\n" + prompt);
+			newInput = userInput.nextLine();
+		}
+	
+		//if yes will return true, if no will return false
+		if (newInput.equalsIgnoreCase("Checking") || newInput.equalsIgnoreCase("Checkings"))
+			return "Checking";
+		else
+			return "Savings";
+	}
 }
