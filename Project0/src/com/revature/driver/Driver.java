@@ -31,37 +31,39 @@ public class Driver {
 		IO.readFiles();
 		int input;
 		
-		// print lists
-//		System.out.println(Bank.usersList.toString() + "\n");
-//		System.out.println(Bank.accountsList.size());
-		
 		// starting menu
 		mainMenu = new Menu("Welcome", "Login", "Register", "Exit");
 		mainMenu.Display();
 	
 		// get and validate user input
 		input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
-		InitialSelection(input);	
+		InitialSelection(input);
 		
-		// call main menu
-		System.out.println("\n\n\n");
-		mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Transfer money", "Request new account", "Exit");
-		mainMenu.Display();
-
 		// get and validate user/admin input
 		if(user instanceof Admin) {
+<<<<<<< HEAD
 			mainMenu = new Menu("Main Menu", "Deposit", "Withdraw", "Transfer", "Approve/Deny", "Exit");
+=======
+			// call admin menu
+			System.out.println("\n\n\n");
+			mainMenu = new Menu("Main Menu", "Deposit", "Withdraw", "Transfer Money", "Approve/Deny", "Exit");
+>>>>>>> 737244533fe71a5fff5dba1f2e763d5c3ee209d5
 			mainMenu.Display();
+			
+			// get and validate user input
 			input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
 			AdminSelection(input);
 		}
 		else {
-			mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Request new account", "Exit");
+			// call main menu
+			System.out.println("\n\n\n");
+			mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Transfer Money", "Request new account", "Exit");
 			mainMenu.Display();
+			
+			// get and validate user input
 			input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
 			MainSelection(input);
-		}
-
+		}		
 	}
 		
 
@@ -70,10 +72,12 @@ public class Driver {
 		int choice; // stores the users choices
 		switch (userInput) {
 		case 1:
+			System.out.println("\n\n\n");
 			LoginSelection();
 			break;
 			
         case 2:
+        	System.out.println("\n\n\n");
         	RegisterSelection();
 			break;
 			
@@ -109,6 +113,7 @@ public class Driver {
 	}
 	
 	static void RegisterSelection() {
+
 		do {
 			loginMenu.Display();
 			
@@ -126,6 +131,47 @@ public class Driver {
 			if(user == null)
 				System.out.println("\n\n\nUser already exists");
 		}while(user == null);
+	}
+	
+	static void AdminSelection(int userInput) {
+		int choice; // stores the users choices		
+		switch(userInput) {
+		case 1: // prompts admin for deposit info
+			System.out.println("\n\n\n");
+			Bank.AdminDeposit();
+			
+			// prompts user to continue or exit program
+			TransactionPrompter();
+			break;
+		case 2: // prompts admin for withdraw info
+			System.out.println("\n\n\n");
+			Bank.AdminWithdraw();
+			
+			// prompts user to continue or exit program
+			TransactionPrompter();
+			break;
+		case 3: // prompts admin for transfer info
+			System.out.println("\n\n\n");
+			Bank.AdminTransfer();
+			
+			// prompts user to continue or exit program
+			TransactionPrompter();
+			break;
+		case 4: //approve/deny
+			
+			break;
+		case 5: //saves the bank info to their respective files and exits the program
+			IO.outputToFiles(Bank.usersList, Bank.accountsList);
+			System.exit(0);
+			break;
+			
+		default: // if user chooses option not listed throw back menu to user
+			System.out.println("\n\n\nPlease type in a correct option.");
+			mainMenu.Display();
+			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			MainSelection(choice);
+			break;			
+		}
 	}
 
 	static void MainSelection(int userInput) {
@@ -173,6 +219,7 @@ public class Driver {
 		}
 	}
 	
+<<<<<<< HEAD
 	private static void AdminSelection(int userInput) {
 		int choice;
 		
@@ -193,6 +240,8 @@ public class Driver {
 		}
 	}
 	
+=======
+>>>>>>> 737244533fe71a5fff5dba1f2e763d5c3ee209d5
 	static void SubSelection(int userInput) {
 		int choice; // stores the users choices
 		switch (userInput) {
@@ -241,7 +290,10 @@ public class Driver {
 			System.out.println("\n\n\n\n");
 			mainMenu.Display();
 			int choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
-			MainSelection(choice);
+			if (user instanceof Admin) {
+				AdminSelection(choice);
+			}
+			else {MainSelection(choice);}
 		}
 		else			
 			System.exit(0);;

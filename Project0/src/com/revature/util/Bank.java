@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import java.text.NumberFormat;
 
 import com.revature.beans.Account;
 import com.revature.beans.User;
@@ -277,17 +278,6 @@ public class Bank {
 			firstAcc.setAccBal(firstAcc.getAccBal() - withdraw);
 			//----------------------------------------------------------------
 			
-			// iterator to iterate through the map
-			Iterator<Entry<Integer, String>> iterator = accountNames.entrySet().iterator();
-			
-			// deletes menu item based on the first selection from menu
-			while (iterator.hasNext()) {
-				Map.Entry<Integer, String> entry = iterator.next();
-			    if (originalFirst.equals(entry.getValue())) {
-			        iterator.remove();
-			    }
-			}
-			
 			//------------------------DEPOSIT PORTION-------------------------
 		    // builds menu
 		    accounts = new Menu("User Accounts", MenuItemConverter());
@@ -333,7 +323,6 @@ public class Bank {
 	
 	    
 //-------------------------------------------Other Methods------------------------------------------
-	    // for USER-------
 	    // gets the names of accounts
 	    private static Map<Integer, String> AccountStrFormatter(String accType, String username) {
 
@@ -393,8 +382,7 @@ public class Bank {
 				 */ 
 				if (accountsList.get(i).accActive == true) {
 					// 
-					String lstItem = accountsList.get(i).accString();
-							//accType + ": " + accountsList.get(i).getAccNum() + "\t" + balance.format(accountsList.get(i).getAccBal());
+					String lstItem = accountsList.get(i).adminAccString();
 					returnLst.put(i, lstItem);
 				}
 			}
@@ -404,11 +392,18 @@ public class Bank {
 	    
 	    // converts the accountNames map into an array of items for the menu
 	    private static String[] MenuItemConverter() {
-
+	    	NumberFormat balance = NumberFormat.getCurrencyInstance();
+	    	
 	    	String s = accountNames.values().toString();
 			String subS = (" " + s.substring(1, s.length() - 1));
 			String[] sa = subS.split(",");
-			return sa;
+			String[] returnArray = new String[sa.length];
+			String balString;
+			for (int i = 0; i < sa.length; i++) {
+				balString = balance.format(accountsList.get((int)accountNames.keySet().toArray()[i]).getAccBal());
+				returnArray[i] = sa[i] + balString;
+			}
+			return returnArray;
 	    }
 //==================================================================================================
 }
