@@ -2,7 +2,6 @@ package com.revature.driver;
 
 import java.util.Scanner;
 
-import com.revature.beans.Account;
 import com.revature.beans.Admin;
 import com.revature.beans.User;
 import com.revature.util.Bank;
@@ -48,20 +47,23 @@ public class Driver {
 		// call main menu
 		System.out.println("\n\n\n");
 		
+		// get and validate user/admin input
 		if(user instanceof Admin) {
-			mainMenu = new Menu("Main Menu", "Editing Accounts", "", "Request new account", "Exit");
+			mainMenu = new Menu("Main Menu", "Deposit", "Withdraw", "Approve/Deny", "Exit");
 			mainMenu.Display();
+			input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			AdminSelection(input);
 		}
 		else {
 			mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Request new account", "Exit");
 			mainMenu.Display();
+			input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+			MainSelection(input);
 		}
-		
-		// get and validate user input
-		input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
-		MainSelection(input);
+
 	}
 		
+
 //-----------------------------------------Selection Methods----------------------------------------
 	static void InitialSelection(int userInput ) {
 		int choice; // stores the users choices
@@ -159,6 +161,23 @@ public class Driver {
 			choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
 			MainSelection(choice);
 			break;
+		}
+	}
+	
+	private static void AdminSelection(int userInput) {
+		int choice;
+		
+		switch(userInput) {
+		case 1:
+			//deposit
+			break;
+		case 2:
+			//withdraw
+			break;
+		case 3:
+			//approve/deny
+			break;
+			
 		}
 	}
 	
