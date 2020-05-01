@@ -46,8 +46,15 @@ public class Driver {
 		
 		// call main menu
 		System.out.println("\n\n\n");
-		mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Request new account", "Exit");
-		mainMenu.Display();
+		
+		if(user instanceof Admin) {
+			mainMenu = new Menu("Main Menu", "Editing Accounts", "", "Request new account", "Exit");
+			mainMenu.Display();
+		}
+		else {
+			mainMenu = new Menu("Main Menu", "Checkings", "Savings", "Request new account", "Exit");
+			mainMenu.Display();
+		}
 		
 		// get and validate user input
 		input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");

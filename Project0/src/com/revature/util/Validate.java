@@ -1,16 +1,14 @@
 package com.revature.util;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
+import com.revature.beans.Account;
 import com.revature.beans.User;
 
-
-final public class Validate {
+public class Validate {
+	
 	// Scanner to take in user input
 	public static Scanner userInput = new Scanner(System.in);
 
@@ -54,14 +52,26 @@ final public class Validate {
 		//if not found:
 		return null;
 	}
-
-	//uses Object Stream to output the list to a text file
-	public void saveData(ArrayList<User> userList) throws IOException {
-		ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream("users.txt"));
-		
-		objectOut.writeObject(userList);
-		objectOut.close();
+	
+	public static void setActive(Account acc, boolean active) {
+		acc.accActive = active;
 	}
+	
+	public static void 
+	
+	public static void cancelAccount(int accId, List<Account> accountsList) {
+		for(Account acc : accountsList)
+			if(acc.getAccNum() == accId)
+				accountsList.remove(acc);
+	}
+	
+//	//uses Object Stream to output the list to a text file
+//	public void saveData(ArrayList<User> userList) throws IOException {
+//		ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream("users.txt"));
+//		
+//		objectOut.writeObject(userList);
+//		objectOut.close();
+//	}
 
 	//Checks the user input and will try and parse it to an double
 	public static double CheckDouble(String input, String errorMessage) {
@@ -79,22 +89,23 @@ final public class Validate {
 		return 0;
 	}
 
-//Checks if the user chose yes or no
-public static boolean CheckYesNo(String prompt, String errorMessage) {
-	//prompts the user and gets their input
-	System.out.println("\n" + prompt);
-	String newInput = userInput.nextLine();
-	
-	//if the user gives incorrect input will loop till its correct
-	while (!(newInput.equalsIgnoreCase("y") || newInput.equalsIgnoreCase("yes") || newInput.equalsIgnoreCase("n") || newInput.equalsIgnoreCase("no"))) {
-		System.out.println("\n" + errorMessage + "\n" + prompt);
-		newInput = userInput.nextLine();
-	}
+	//Checks if the user chose yes or no
+	public static boolean CheckYesNo(String prompt, String errorMessage) {
+		//prompts the user and gets their input
+		System.out.println("\n" + prompt);
+		String newInput = userInput.nextLine();
+		
+		//if the user gives incorrect input will loop till its correct
+		while (!newInput.equalsIgnoreCase("y") || !newInput.equalsIgnoreCase("yes") || !newInput.equalsIgnoreCase("n") || !newInput.equalsIgnoreCase("no")) {
+			System.out.println("\n" + errorMessage + "\n" + prompt);
+			newInput = userInput.nextLine();
+		}
+		
 		//if yes will return true, if no will return false
 		if (newInput.equalsIgnoreCase("y") || newInput.equalsIgnoreCase("yes"))
 			return true;
 		else
 			return false;
 	}
-}
 
+}
