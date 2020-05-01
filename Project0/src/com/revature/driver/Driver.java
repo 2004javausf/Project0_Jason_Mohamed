@@ -122,7 +122,7 @@ public class Driver {
 			System.out.println("Enter a name");
 			String name = sc.nextLine();
 			
-			user = Validate.register(username, password, name, Bank.usersList);
+			user = Validate.register(username, password, name, Bank.usersList, Bank.accountsList);
 			
 			if(user == null)
 				System.out.println("\n\n\nUser already exists");

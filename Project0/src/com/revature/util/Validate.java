@@ -46,13 +46,15 @@ public class Validate {
 	}
 	
 	//Registers user and adds them to account list
-	public static User register(String username, String password, String name, List<User> usersList) {		
+	public static User register(String username, String password, String name, List<User> usersList, List<Account> accountsList) {		
 		for(User user : usersList)
 			if(username.equalsIgnoreCase(user.getUsername()))
 				return null;
 		
 		User newUser = new User(username, password, name);
 		usersList.add(newUser);
+		
+		IO.outputToFiles(usersList, accountsList);
 		return newUser;
 	}
 	
