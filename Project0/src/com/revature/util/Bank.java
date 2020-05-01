@@ -24,6 +24,7 @@ public class Bank {
 	private static final String resetString = "\u001B[0m";
 	
 //---------------------------------------Account Edit Methods---------------------------------------
+	    // for USER
 		public static void Deposit(String accType, String username) {
 			// builds menu
 			accountNames = AccountStrFormatter(accType, username);
@@ -64,7 +65,9 @@ public class Bank {
 				}			
 		}
 		
-		public static void Withdraw(String accType, String username) {
+		public static String Withdraw(String accType, String username) {
+			// string to output to screen
+			String transaction = "";
 			// builds menu
 			accountNames = AccountStrFormatter(accType, username);
 			accounts = new Menu("temp title", MenuItemConverter());
@@ -86,17 +89,22 @@ public class Bank {
 				// prompt the user and withdraw amount from the selected account
 				System.out.println("\nHow much would you like to withdraw?");
 				
-				double withdraw = -1;
-				while (withdraw < 0) {
-					withdraw = Validate.CheckDouble(sc.nextLine(), "Please enter a dollar amount in number format greater than -1");
-				}
+				double withdraw = 0;
+				do{
+					if (withdraw < 0) {
+						System.out.println("\nPlease enter a dollar amount in number format greater than -1");
+						withdraw = Validate.CheckDouble(sc.nextLine(), "Please enter a dollar amount in number format greater than -1");
+					}
+					else {withdraw = Validate.CheckDouble(sc.nextLine(), "Please enter a dollar amount in number format greater than -1");}
+				} while (withdraw < 0);
+				
 				// subtract withdraw from the account if withdraw is equal to or greater than account balance
 				if (withdraw <= selectedAcc.getAccBal()) {
 					selectedAcc.setAccBal(selectedAcc.getAccBal() - withdraw);
 				}
 				else { // pushes withdraw method again
 					System.out.println("\n\n\n\nWithdraw amount exceeds the account balance.");
-					Withdraw(accType, username);
+					transaction = Withdraw(accType, username);
 				}
 				
 				// update the referenced account in the accountsList
@@ -104,14 +112,28 @@ public class Bank {
 					if (acc.getAccNum() == selectedAcc.getAccNum()) {
 						acc = selectedAcc;
 						
-						System.out.println(cyanString + "\n" + acc.accString() + resetString);
+						transaction = cyanString + "\n" + acc.accString() + resetString;
 					}
-				}						
+				}
+				return transaction;
 		}
 		
-	    public static void Transfer() {
+	    public static void Transfer(String username) {
 	  
 		}
+	    
+	    // for ADMIN
+	    public static void AdminDeposit() {
+	    	
+	    }
+	    
+        public static void AdminWithdraw() {
+	    	
+	    }
+        
+        public static void AdminTransfer() {
+	    	
+	    }
 	    
 	    // gets the names of accounts
 	    private static Map<Integer, String> AccountStrFormatter(String accType, String username) {
