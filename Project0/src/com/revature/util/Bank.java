@@ -91,7 +91,7 @@ public class Bank {
 				System.out.println("\nHow much would you like to withdraw?");
 				
 				// gets the desired amount from user to withdraw
-				double withdraw = 0;
+				double withdraw = -1;
 				do{
 					if (withdraw < 0) {
 						System.out.println("\nWithdraw amount is less than 0");
@@ -106,6 +106,8 @@ public class Bank {
 							
 				// subtract withdraw from the account if withdraw is equal to or greater than account balance
 				selectedAcc.setAccBal(selectedAcc.getAccBal() - withdraw);
+				
+				System.out.println(cyanString + "\n" + selectedAcc.accString() + resetString);
 		}
 		
 	    public static void Transfer(String username) {
