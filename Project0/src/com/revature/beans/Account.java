@@ -2,7 +2,6 @@
 package com.revature.beans;
 
 import java.io.Serializable;
-import java.text.NumberFormat;
 
 public class Account implements Serializable {
 	
@@ -73,10 +72,7 @@ public class Account implements Serializable {
 	
 // non-overriding to.String's
 	public String accString() {
-		// formats a double in dollar format
-		NumberFormat balance = NumberFormat.getCurrencyInstance();
-		
-		return accType + ": " + accNum + "\t" + balance.format(accBal);
+		return accType + ": " + accNum + "\t";
 	}
 	
 	public String adminAccString() {

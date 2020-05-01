@@ -29,7 +29,7 @@ public class Driver {
 		// Pull from text files and store
 		IO.readFiles();
 		int input;
-		
+
 		// starting menu
 		mainMenu = new Menu("Welcome", "Login", "Register", "Exit");
 		mainMenu.Display();
@@ -169,19 +169,19 @@ public class Driver {
 			System.out.println("\n\n\n");
 
 			// checks to see if accounts exist
-			if (AccountsChecker("Transfer") == true) {
+//			if (AccountsChecker("Transfer") == true) {
 				Bank.AdminTransfer();
 				
 				// prompts user to continue or exit program
 				TransactionPrompter();
-			}
-			else {
-				System.out.println("There are no, or less than 2, accounts to edit.");
-				mainMenu.Display();
-				choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
-				MainSelection(choice);
-			}			
-			break;
+//			}
+//			else {
+//				System.out.println("There are no, or less than 2, accounts to edit.");
+//				mainMenu.Display();
+//				choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+//				MainSelection(choice);
+//			}			
+//			break;
 		case 4: //approve/deny
 			System.out.println("\n\n\n");
 			
@@ -257,22 +257,22 @@ public class Driver {
 			System.out.println("\n\n\n");
 			
 			// checks to see if accounts exist
-			if (AccountsChecker("Transfer") == true) {
+//			if (AccountsChecker("Transfer") == true) {
 				Bank.Transfer(username);
 				
 				// prompts user to continue or exit program
 				TransactionPrompter();
-			}
-			else {
-				System.out.println("There are no, or less than 2, accounts to edit.");
-				mainMenu.Display();
-				choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
-				MainSelection(choice);
-			}
+//			}
+//			else {
+//				System.out.println("There are no, or less than 2, accounts to edit.");
+//				mainMenu.Display();
+//				choice = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
+//				MainSelection(choice);
+//			}
 			break;
 			
 		case 4: //prompts user and creates a new account
-			System.out.println("\n\n\n");
+			System.out.println("\n");
 			Bank.CreateAccount(user);
 			
 			// prompts user to continue or exit program
@@ -292,7 +292,7 @@ public class Driver {
 			break;
 		}
 	}
-	
+
 	static void SubSelection(int userInput) {
 		int choice; // stores the users choices
 		switch (userInput) {
@@ -357,16 +357,18 @@ public class Driver {
 			for (Account acc : Bank.accountsList) {
 				if (acc.getAccType().equalsIgnoreCase(checkType) && acc.accActive == true) {
 					return true;
-				} else {return false;}
+				} 
 			}
+			return false;
 		}
 		// if there are no savings accounts
 		else if (checkType.equalsIgnoreCase("Savings")) {
 			for (Account acc : Bank.accountsList) {
 				if (acc.getAccType().equalsIgnoreCase(checkType) && acc.accActive == true) {
 					return true;
-				} else {return false;}
+				} 
 			}
+			return false;
 		}
 		// if there are no active accounts
 		else if (checkType.equalsIgnoreCase("Transfer")) {
@@ -377,9 +379,9 @@ public class Driver {
 					if (counter > 1) {
 						return true;
 					}
-				}
-				 else {return false;}
+				}				 
 			}
+			return false;
 		}		
 		// if there are no inactive accounts
 		else if (checkType.equalsIgnoreCase("Admin")) { 
@@ -389,7 +391,7 @@ public class Driver {
 				}
 				else if (Bank.accountsList.size() == 0) {
 					return false;
-				} else {return false;}
+				}
 			}
 		}
 		// if there are no active accounts

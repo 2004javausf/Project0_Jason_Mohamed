@@ -465,10 +465,8 @@ public class Bank {
 			String subS = (" " + s.substring(1, s.length() - 1));
 			String[] sa = subS.split(",");
 			String[] returnArray = new String[sa.length];
-			String balString;
 			for (int i = 0; i < sa.length; i++) {
-				balString = balance.format(accountsList.get((int)accountNames.keySet().toArray()[i]).getAccBal());
-				returnArray[i] = sa[i] + balString;
+				returnArray[i] = sa[i] + balance.format(accountsList.get((int)accountNames.keySet().toArray()[i]).getAccBal());
 			}
 			return returnArray;
 	    }
