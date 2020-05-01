@@ -49,7 +49,7 @@ public class Driver {
 		
 		// get and validate user/admin input
 		if(user instanceof Admin) {
-			mainMenu = new Menu("Main Menu", "Deposit", "Withdraw", "Approve/Deny", "Exit");
+			mainMenu = new Menu("Main Menu", "Deposit", "Withdraw", "Transfer", "Approve/Deny", "Exit");
 			mainMenu.Display();
 			input = Validate.CheckInt(sc.nextLine(), "Please enter a whole number for selection.");
 			AdminSelection(input);
@@ -169,13 +169,16 @@ public class Driver {
 		
 		switch(userInput) {
 		case 1:
-			//deposit
+			Bank.AdminDeposit();
 			break;
 		case 2:
-			//withdraw
+			Bank.AdminWithdraw();
 			break;
 		case 3:
-			//approve/deny
+			Bank.AdminTransfer();
+			break;
+		case 4:
+			//Validate.setActive(null, false);
 			break;
 			
 		}
