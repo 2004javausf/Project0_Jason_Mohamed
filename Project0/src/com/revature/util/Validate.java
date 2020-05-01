@@ -28,6 +28,22 @@ public class Validate {
 		
 		return numReturn;
 	}
+  
+  //Checks the user input and will try and parse it to an double
+	public static double CheckDouble(String input, String errorMessage) {
+		try {
+			return Double.parseDouble(input);		
+		}
+		catch (NumberFormatException e) {
+			System.out.println(errorMessage);
+			
+			// New user input and reset prompts
+			String newInput = userInput.nextLine();
+			CheckDouble(newInput, errorMessage);
+		}	
+		
+		return 0;
+	}
 	
 	//Registers user and adds them to account list
 	public static User register(String username, String password, String name, List<User> usersList) {		
@@ -40,6 +56,7 @@ public class Validate {
 		return newUser;
 	}
 	
+	//Grants access to the program
 	public static User login(String username, String password, List<User> usersList) {
 		Iterator<User> it = usersList.iterator();
 		
@@ -64,22 +81,7 @@ public class Validate {
 				accountsList.remove(acc);
 	}
 
-	//Checks the user input and will try and parse it to an double
-	public static double CheckDouble(String input, String errorMessage) {
-		try {
-			return Double.parseDouble(input);		
-		}
-		catch (NumberFormatException e) {
-			System.out.println(errorMessage);
-			
-			// New user input and reset prompts
-			String newInput = userInput.nextLine();
-			CheckDouble(newInput, errorMessage);
-		}	
-		
-		return 0;
-	}
-
+  //Checks if the user chose yes or no
 	public static boolean CheckYesNo(String prompt, String errorMessage) {
 		//prompts the user and gets their input
 		System.out.println("\n" + prompt);
@@ -91,11 +93,11 @@ public class Validate {
 			newInput = userInput.nextLine();
 		}
 	
-			//if yes will return true, if no will return false
-			if (newInput.equalsIgnoreCase("y") || newInput.equalsIgnoreCase("yes"))
-				return true;
-			else
-				return false;
+		//if yes will return true, if no will return false
+		if (newInput.equalsIgnoreCase("y") || newInput.equalsIgnoreCase("yes"))
+			return true;
+		else
+			return false;
 	}
 
 }

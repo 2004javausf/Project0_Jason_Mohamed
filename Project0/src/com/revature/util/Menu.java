@@ -12,13 +12,13 @@ public class Menu {
 	private static final String cyanString = "\u001B[36m";
 	private static final String resetString = "\u001B[0m";
 	
-	// Con for a very basic menu
+	// Constructor for a very basic menu
 	public Menu(String title) {
 		this.title = title;
 
 	}
 	
-    // Con for custom menu taking in a title and items to display in menu
+    // Constructor for custom menu taking in a title and items to display in menu
 	public Menu(String title, String...menuItems) {
 		this.title = title;
 		
