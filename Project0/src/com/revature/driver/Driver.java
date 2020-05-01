@@ -41,13 +41,9 @@ public class Driver {
 		
 		// get and validate user/admin input
 		if(user instanceof Admin) {
-<<<<<<< HEAD
-			mainMenu = new Menu("Main Menu", "Deposit", "Withdraw", "Transfer", "Approve/Deny", "Exit");
-=======
 			// call admin menu
 			System.out.println("\n\n\n");
 			mainMenu = new Menu("Main Menu", "Deposit", "Withdraw", "Transfer Money", "Approve/Deny", "Exit");
->>>>>>> 737244533fe71a5fff5dba1f2e763d5c3ee209d5
 			mainMenu.Display();
 			
 			// get and validate user input
@@ -126,7 +122,7 @@ public class Driver {
 			System.out.println("Enter a name");
 			String name = sc.nextLine();
 			
-			user = Validate.register(username, password, name, Bank.usersList);
+			user = Validate.register(username, password, name, Bank.usersList, Bank.accountsList);
 			
 			if(user == null)
 				System.out.println("\n\n\nUser already exists");
@@ -219,29 +215,6 @@ public class Driver {
 		}
 	}
 	
-<<<<<<< HEAD
-	private static void AdminSelection(int userInput) {
-		int choice;
-		
-		switch(userInput) {
-		case 1:
-			Bank.AdminDeposit();
-			break;
-		case 2:
-			Bank.AdminWithdraw();
-			break;
-		case 3:
-			Bank.AdminTransfer();
-			break;
-		case 4:
-			//Validate.setActive(null, false);
-			break;
-			
-		}
-	}
-	
-=======
->>>>>>> 737244533fe71a5fff5dba1f2e763d5c3ee209d5
 	static void SubSelection(int userInput) {
 		int choice; // stores the users choices
 		switch (userInput) {
