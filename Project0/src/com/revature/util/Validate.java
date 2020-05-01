@@ -16,6 +16,7 @@ final public class Validate {
 
 	//Checks the user input and will try and parse it to an int
 	public static int CheckInt(String input, String errorMessage) {
+		int numReturn;
 		try {
 			return Integer.parseInt(input);		
 		}
@@ -24,10 +25,27 @@ final public class Validate {
 			
 			// New user input and reset prompts
 			String newInput = userInput.nextLine();
-			CheckInt(newInput, errorMessage);
+			numReturn = CheckInt(newInput, errorMessage);
 		}	
 		
-		return 0;
+		return numReturn;
+	}
+	
+	//Checks the user input and will try and parse it to an double
+	public static double CheckDouble(String input, String errorMessage) {
+		double numReturn;
+		try {
+			return Double.parseDouble(input);		
+		}
+		catch (NumberFormatException e) {
+			System.out.println(errorMessage);
+			
+			// New user input and reset prompts
+			String newInput = userInput.nextLine();
+			numReturn = CheckDouble(newInput, errorMessage);
+		}	
+		
+		return numReturn;
 	}
 	
 	//Registers user and adds them to account list
@@ -63,24 +81,8 @@ final public class Validate {
 		objectOut.close();
 	}
 
-	//Checks the user input and will try and parse it to an double
-	public static double CheckDouble(String input, String errorMessage) {
-		try {
-			return Double.parseDouble(input);		
-		}
-		catch (NumberFormatException e) {
-			System.out.println(errorMessage);
-			
-			// New user input and reset prompts
-			String newInput = userInput.nextLine();
-			CheckDouble(newInput, errorMessage);
-		}	
-		
-		return 0;
-	}
-
-//Checks if the user chose yes or no
-public static boolean CheckYesNo(String prompt, String errorMessage) {
+   //Checks if the user chose yes or no
+   public static boolean CheckYesNo(String prompt, String errorMessage) {
 	//prompts the user and gets their input
 	System.out.println("\n" + prompt);
 	String newInput = userInput.nextLine();

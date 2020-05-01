@@ -37,6 +37,7 @@ public class Driver {
 		System.out.println(Bank.accountsList.size());
 		
 		// starting menu
+		System.out.println("\n\n\n");
 		mainMenu = new Menu("Welcome", "Login", "Register", "Exit");
 		mainMenu.Display();
 	
@@ -77,6 +78,44 @@ public class Driver {
 			InitialSelection(choice);
 			break;
 		}
+	}
+	
+	static void LoginSelection() {
+		// Login
+		do {
+			loginMenu.Display();
+			
+			System.out.println("What is your username?");
+			username = sc.nextLine();
+			
+			System.out.println("\nWhat is your password?");
+			password = sc.nextLine();
+			
+			user = Validate.login(username, password, Bank.usersList);
+			
+			if(user == null)
+				System.out.println("\n\n\nUsername/password not found");
+		}while(user == null);
+	}
+	
+	static void RegisterSelection() {
+		do {
+			loginMenu.Display();
+			
+			System.out.println("Enter a new username");
+			username = sc.nextLine();
+			
+			System.out.println("Enter a new password");
+			password = sc.nextLine();
+			
+			System.out.println("Enter a name");
+			String name = sc.nextLine();
+			
+			user = Validate.register(username, password, name, Bank.usersList);
+			
+			if(user == null)
+				System.out.println("\n\n\nUser already exists");
+		}while(user == null);
 	}
 
 	static void MainSelection(int userInput) {
@@ -129,7 +168,7 @@ public class Driver {
 			
 		case 2: // prompts user for withdraw info
 			System.out.println("\n\n\n");
-			Bank.Withdraw(subMenu.getTitle(), username);
+			System.out.println(Bank.Withdraw(subMenu.getTitle(), username));
 			
 			// prompts user to continue or exit program
 			TransactionPrompter();
@@ -155,44 +194,7 @@ public class Driver {
 			break;
 		}
 	}
-	
-	static void LoginSelection() {
-		// Login
-		do {
-			loginMenu.Display();
-			
-			System.out.println("What is your username?");
-			username = sc.nextLine();
-			
-			System.out.println("What is your password?");
-			password = sc.nextLine();
-			
-			user = Validate.login(username, password, Bank.usersList);
-			
-			if(user == null)
-				System.out.println("\n\n\nUsername/password not found");
-		}while(user == null);
-	}
-	
-	static void RegisterSelection() {
-		do {
-			loginMenu.Display();
-			
-			System.out.println("Enter a new username");
-			username = sc.nextLine();
-			
-			System.out.println("Enter a new password");
-			password = sc.nextLine();
-			
-			System.out.println("Enter a name");
-			String name = sc.nextLine();
-			
-			user = Validate.register(username, password, name, Bank.usersList);
-			
-			if(user == null)
-				System.out.println("\n\n\nUser already exists");
-		}while(user == null);
-	}
+
 
 //==================================================================================================
 
