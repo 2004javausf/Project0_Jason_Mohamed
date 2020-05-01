@@ -1,9 +1,5 @@
 package com.revature.util;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -59,6 +55,7 @@ final public class Validate {
 		return newUser;
 	}
 	
+	//Grants access to the program
 	public static User login(String username, String password, List<User> usersList) {
 		Iterator<User> it = usersList.iterator();
 		
@@ -73,16 +70,8 @@ final public class Validate {
 		return null;
 	}
 
-	//uses Object Stream to output the list to a text file
-	public void saveData(ArrayList<User> userList) throws IOException {
-		ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream("users.txt"));
-		
-		objectOut.writeObject(userList);
-		objectOut.close();
-	}
-
-   //Checks if the user chose yes or no
-   public static boolean CheckYesNo(String prompt, String errorMessage) {
+    //Checks if the user chose yes or no
+    public static boolean CheckYesNo(String prompt, String errorMessage) {
 	//prompts the user and gets their input
 	System.out.println("\n" + prompt);
 	String newInput = userInput.nextLine();
